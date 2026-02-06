@@ -6,7 +6,11 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
-  getOrders(): string {
-    return this.ordersService.getOrdersMessage();
+  list() {
+    const items = this.ordersService.list();
+    return {
+      items: items,
+      total: items.length,
+    };
   }
 }
