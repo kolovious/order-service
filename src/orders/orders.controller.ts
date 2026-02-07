@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { OrdersService } from './orders.service';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { OrderResponseDto } from './dto/order-response.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -12,5 +14,10 @@ export class OrdersController {
       items: items,
       total: items.length,
     };
+  }
+
+  @Post()
+  create(@Body() dto: CreateOrderDto): OrderResponseDto {
+    return this.ordersService.create(dto);
   }
 }
