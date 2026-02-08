@@ -32,6 +32,7 @@ Rules:
 - Domain **must not** depend on NestJS, DTOs, or infrastructure.
 - Application layer **must not** contain HTTP or framework concerns.
 - Controllers **must not** contain business logic.
+- Use cases inside `application/` **must not** include `use-case` or `UseCase` in file/class names.
 
 If a change violates these rules, it must be rejected.
 
