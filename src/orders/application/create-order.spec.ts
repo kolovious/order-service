@@ -10,7 +10,7 @@ describe('CreateOrder', () => {
     });
 
     expect(result).toEqual({
-      id: 'order_1',
+      id: '550e8400-e29b-41d4-a716-446655440000',
       customerId: 'customer_1',
       amount: 120,
       status: 'created',

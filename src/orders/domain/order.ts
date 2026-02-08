@@ -1,16 +1,19 @@
+import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
+import { OrderId } from './value-objects/OrderId';
+
 export type OrderStatus = 'created';
 
 export interface CreateOrderEntityParams {
-  id: string;
+  id: OrderId;
   customerId: string;
-  amount: number;
+  amount: MoneyValueObject;
 }
 
 export class Order {
   private constructor(
-    private readonly _id: string,
+    private readonly _id: OrderId,
     private readonly _customerId: string,
-    private readonly _amount: number,
+    private readonly _amount: MoneyValueObject,
     private readonly _status: OrderStatus,
   ) {}
 
@@ -20,14 +23,10 @@ export class Order {
       throw new Error('customerId is required');
     }
 
-    if (params.amount <= 0) {
-      throw new Error('amount must be greater than zero');
-    }
-
     return new Order(params.id, customerId, params.amount, 'created');
   }
 
-  get id(): string {
+  get id(): OrderId {
     return this._id;
   }
 
@@ -35,7 +34,7 @@ export class Order {
     return this._customerId;
   }
 
-  get amount(): number {
+  get amount(): MoneyValueObject {
     return this._amount;
   }
 
