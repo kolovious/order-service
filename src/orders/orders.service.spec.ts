@@ -1,13 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersService } from './orders.service';
 import { CreateOrder } from './application/create-order';
+import { ListOrders } from './application/list-orders';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 describe('OrdersService', () => {
   let service: OrdersService;
+  let createOrder: jest.Mocked<CreateOrder>;
+  let listOrders: jest.Mocked<ListOrders>;
 
   beforeEach(async () => {
+    createOrder = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<CreateOrder>;
+
+    listOrders = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<ListOrders>;
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrdersService, CreateOrder],
+      providers: [
+        OrdersService,
+        { provide: CreateOrder, useValue: createOrder },
+        { provide: ListOrders, useValue: listOrders },
+      ],
     }).compile();
 
     service = module.get<OrdersService>(OrdersService);
@@ -15,5 +31,38 @@ describe('OrdersService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should delegate create to CreateOrder', () => {
+    const dto: CreateOrderDto = { customerId: 'customer_1', amount: 120 };
+    const expected = {
+      id: 'order_1',
+      customerId: 'customer_1',
+      amount: 120,
+      status: 'created',
+    };
+    createOrder.execute.mockReturnValue(expected);
+
+    const result = service.create(dto);
+
+    expect(createOrder.execute).toHaveBeenCalledWith(dto);
+    expect(result).toEqual(expected);
+  });
+
+  it('should delegate list to ListOrders', () => {
+    const expected = [
+      {
+        id: 'order_1',
+        customerId: 'customer_1',
+        amount: 120,
+        status: 'created',
+      },
+    ];
+    listOrders.execute.mockReturnValue(expected);
+
+    const result = service.list();
+
+    expect(listOrders.execute).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(expected);
   });
 });
