@@ -16,4 +16,15 @@ describe('CreateOrder', () => {
       status: 'created',
     });
   });
+
+  it('should fail when amount is invalid', () => {
+    const useCase = new CreateOrder();
+
+    expect(() =>
+      useCase.execute({
+        customerId: 'customer_1',
+        amount: 0,
+      }),
+    ).toThrow('amount must be greater than zero');
+  });
 });

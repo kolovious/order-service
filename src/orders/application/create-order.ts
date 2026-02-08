@@ -1,3 +1,5 @@
+import { Order } from '../domain/order';
+
 export interface CreateOrderCommand {
   customerId: string;
   amount: number;
@@ -12,11 +14,17 @@ export interface CreateOrderResult {
 
 export class CreateOrder {
   execute(command: CreateOrderCommand): CreateOrderResult {
-    return {
+    const order = Order.create({
       id: 'order_1',
       customerId: command.customerId,
       amount: command.amount,
-      status: 'created',
+    });
+
+    return {
+      id: order.id,
+      customerId: order.customerId,
+      amount: order.amount,
+      status: order.status,
     };
   }
 }
