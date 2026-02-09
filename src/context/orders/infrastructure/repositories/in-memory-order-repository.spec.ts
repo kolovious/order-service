@@ -1,7 +1,7 @@
 import { InMemoryOrderRepository } from './in-memory-order-repository';
 import { Order } from '../../domain/order';
 import { OrderId } from '../../domain/value-objects/OrderId';
-import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
+import { MoneyValueObject } from '../../../../shared/domain/value-objects/MoneyValueObject';
 
 describe('InMemoryOrderRepository', () => {
   it('should save and list orders', () => {

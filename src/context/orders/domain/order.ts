@@ -1,4 +1,4 @@
-import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
+import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
 import { OrderId } from './value-objects/OrderId';
 
 export type OrderStatus = 'created';

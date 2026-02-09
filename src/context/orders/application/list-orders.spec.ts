@@ -2,7 +2,7 @@ import { ListOrders } from './list-orders';
 import { OrderRepository } from '../domain/order-repository';
 import { Order } from '../domain/order';
 import { OrderId } from '../domain/value-objects/OrderId';
-import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
+import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
 
 describe('ListOrders', () => {
   it('should map domain orders from repository', () => {

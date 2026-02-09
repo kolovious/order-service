@@ -1,5 +1,5 @@
 import { Order } from './order';
-import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
+import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
 import { OrderId } from './value-objects/OrderId';
 
 const VALID_ORDER_ID = '550e8400-e29b-41d4-a716-446655440000';

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Order } from '../domain/order';
-import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
+import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
 import { OrderId } from '../domain/value-objects/OrderId';
 import { OrderRepository } from '../domain/order-repository';
 

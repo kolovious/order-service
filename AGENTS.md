@@ -69,19 +69,26 @@ Agent **must NOT**:
 
 ## Project Structure & Module Organization
 
-- `src/` contains the NestJS application code.
+- `src/` contains application and domain code.
 - `src/main.ts` is the entry point.
-- `src/app.module.ts` is the root composition module (no logic).
-- Feature modules live under `src/<feature>/`.
+- `src/app/app.module.ts` is the root Nest composition module (no logic).
+- Nest-specific modules live under `src/app/`.
+- Bounded contexts live under `src/context/<bounded-context>/`.
 
 Recommended internal structure for features:
 
 ```text
-src/orders/
+src/app/
+  orders/
+    dto/
+    orders.controller.ts
+    orders.service.ts
+    orders.module.ts
+
+src/context/orders/
   application/
   domain/
   infrastructure/
-  orders.module.ts
 ```
 
 ---

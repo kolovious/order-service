@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
-import { CreateOrder } from './application/create-order';
-import { ListOrders } from './application/list-orders';
-import { InMemoryOrderRepository } from './infrastructure/repositories/in-memory-order-repository';
-import { OrderRepository } from './domain/order-repository';
+import { CreateOrder } from '../../context/orders/application/create-order';
+import { ListOrders } from '../../context/orders/application/list-orders';
+import { InMemoryOrderRepository } from '../../context/orders/infrastructure/repositories/in-memory-order-repository';
+import { OrderRepository } from '../../context/orders/domain/order-repository';
 
 @Module({
   controllers: [OrdersController],
