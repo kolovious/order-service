@@ -11,10 +11,10 @@ describe('CreateOrder', () => {
     } as unknown as jest.Mocked<OrderRepository>;
   });
 
-  it('should create an order result from command input', () => {
+  it('should create an order result from command input', async () => {
     const useCase = new CreateOrder(orderRepository);
 
-    const result = useCase.execute({
+    const result = await useCase.execute({
       customerId: 'customer_1',
       amount: 120,
     });
@@ -28,15 +28,15 @@ describe('CreateOrder', () => {
     expect(orderRepository.save).toHaveBeenCalledTimes(1);
   });
 
-  it('should fail when amount is invalid', () => {
+  it('should fail when amount is invalid', async () => {
     const useCase = new CreateOrder(orderRepository);
 
-    expect(() =>
+    await expect(() =>
       useCase.execute({
         customerId: 'customer_1',
         amount: 0,
       }),
-    ).toThrow('amount must be greater than zero');
+    ).rejects.toThrow('amount must be greater than zero');
     expect(orderRepository.save).not.toHaveBeenCalled();
   });
 });

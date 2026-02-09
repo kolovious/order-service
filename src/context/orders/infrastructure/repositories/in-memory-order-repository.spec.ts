@@ -4,7 +4,7 @@ import { OrderId } from '../../domain/value-objects/OrderId';
 import { MoneyValueObject } from '../../../../shared/domain/value-objects/MoneyValueObject';
 
 describe('InMemoryOrderRepository', () => {
-  it('should save and list orders', () => {
+  it('should save and list orders', async () => {
     const repository = new InMemoryOrderRepository();
     const order = Order.create({
       id: new OrderId('550e8400-e29b-41d4-a716-446655440000'),
@@ -12,8 +12,8 @@ describe('InMemoryOrderRepository', () => {
       amount: new MoneyValueObject(120),
     });
 
-    repository.save(order);
+    await repository.save(order);
 
-    expect(repository.findAll()).toEqual([order]);
+    await expect(repository.findAll()).resolves.toEqual([order]);
   });
 });

@@ -10,14 +10,14 @@ export class OrdersService {
     private readonly listOrders: ListOrders,
   ) {}
 
-  create(dto: CreateOrderDto) {
+  async create(dto: CreateOrderDto) {
     return this.createOrder.execute({
       customerId: dto.customerId,
       amount: dto.amount,
     });
   }
 
-  list() {
+  async list() {
     return this.listOrders.execute();
   }
 }

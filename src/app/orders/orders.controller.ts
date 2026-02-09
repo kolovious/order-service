@@ -8,8 +8,8 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
-  list() {
-    const items = this.ordersService.list();
+  async list() {
+    const items = await this.ordersService.list();
     return {
       items: items,
       total: items.length,
@@ -17,7 +17,7 @@ export class OrdersController {
   }
 
   @Post()
-  create(@Body() dto: CreateOrderDto): OrderResponseDto {
+  async create(@Body() dto: CreateOrderDto): Promise<OrderResponseDto> {
     return this.ordersService.create(dto);
   }
 }

@@ -5,13 +5,13 @@ import { OrderId } from '../domain/value-objects/OrderId';
 import { MoneyValueObject } from '../../../shared/domain/value-objects/MoneyValueObject';
 
 describe('ListOrders', () => {
-  it('should map domain orders from repository', () => {
+  it('should map domain orders from repository', async () => {
     const orderRepository = {
       save: jest.fn(),
       findAll: jest.fn(),
     } as unknown as jest.Mocked<OrderRepository>;
 
-    orderRepository.findAll.mockReturnValue([
+    orderRepository.findAll.mockResolvedValue([
       Order.create({
         id: new OrderId('550e8400-e29b-41d4-a716-446655440000'),
         customerId: 'customer_1',
@@ -20,7 +20,7 @@ describe('ListOrders', () => {
     ]);
 
     const useCase = new ListOrders(orderRepository);
-    const result = useCase.execute();
+    const result = await useCase.execute();
 
     expect(orderRepository.findAll).toHaveBeenCalledTimes(1);
     expect(result).toEqual([

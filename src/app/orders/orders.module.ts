@@ -4,6 +4,7 @@ import { OrdersService } from './orders.service';
 import { CreateOrder } from '../../context/orders/application/create-order';
 import { ListOrders } from '../../context/orders/application/list-orders';
 import { InMemoryOrderRepository } from '../../context/orders/infrastructure/repositories/in-memory-order-repository';
+import { PrismaOrderRepository } from '../../context/orders/infrastructure/repositories/prisma-order-repository';
 import { OrderRepository } from '../../context/orders/domain/order-repository';
 
 @Module({
@@ -13,7 +14,17 @@ import { OrderRepository } from '../../context/orders/domain/order-repository';
     InMemoryOrderRepository,
     {
       provide: OrderRepository,
-      useExisting: InMemoryOrderRepository,
+      useFactory: (
+        inMemoryOrderRepository: InMemoryOrderRepository,
+      ): OrderRepository => {
+        const driver = process.env.ORDER_REPOSITORY_DRIVER ?? 'in-memory';
+        if (driver === 'prisma') {
+          return new PrismaOrderRepository();
+        }
+
+        return inMemoryOrderRepository;
+      },
+      inject: [InMemoryOrderRepository],
     },
     {
       provide: CreateOrder,

@@ -4,11 +4,11 @@ import { OrderRepository } from '../../domain/order-repository';
 export class InMemoryOrderRepository extends OrderRepository {
   private readonly orders: Order[] = [];
 
-  save(order: Order): void {
+  async save(order: Order): Promise<void> {
     this.orders.push(order);
   }
 
-  findAll(): Order[] {
+  async findAll(): Promise<Order[]> {
     return [...this.orders];
   }
 }

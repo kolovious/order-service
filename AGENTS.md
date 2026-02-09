@@ -99,16 +99,36 @@ src/context/orders/
 - Use mocks/fakes for repositories.
 - Avoid HTTP or NestJS in unit tests.
 - Coverage is less important than testing meaningful behavior.
+- Tests must run with `NODE_ENV=test` and `ORDER_REPOSITORY_DRIVER=in-memory`.
+
+---
+
+## Environment Strategy
+
+- `development`:
+  - Local dockerized environment using `docker-compose.yml` (`api` + `db`).
+  - Uses `.env.development`.
+  - Prefer `ORDER_REPOSITORY_DRIVER=prisma` for real persistence flow.
+- `test`:
+  - Must not depend on PostgreSQL.
+  - Uses `in-memory` repository driver.
+  - Uses `.env.test` only as reference/defaults; tests should be deterministic without DB.
+- `production`:
+  - Must be managed outside this repository (separate infra/deployment project).
+  - Do not add production-specific deployment orchestration here.
 
 ---
 
 ## Build, Test, and Development Commands
 
 - `npm run start:dev` – local development
+- `npm run start:dev:docker` – dockerized local development (`api` + `db`)
 - `npm run test` – unit tests
 - `npm run test:cov` – coverage
 - `npm run lint` – linting
 - `npm run format` – formatting
+- `npm run prisma:generate` – generate Prisma client
+- `npm run prisma:migrate:dev` – run local migrations
 
 ---
 

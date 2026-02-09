@@ -19,14 +19,14 @@ export interface CreateOrderResult {
 export class CreateOrder {
   constructor(private readonly orderRepository: OrderRepository) {}
 
-  execute(command: CreateOrderCommand): CreateOrderResult {
+  async execute(command: CreateOrderCommand): Promise<CreateOrderResult> {
     const order = Order.create({
       id: new OrderId(randomUUID()),
       customerId: command.customerId,
       amount: new MoneyValueObject(command.amount),
     });
 
-    this.orderRepository.save(order);
+    await this.orderRepository.save(order);
 
     return {
       id: order.id.value,

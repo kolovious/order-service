@@ -10,8 +10,10 @@ export interface OrderListItem {
 export class ListOrders {
   constructor(private readonly orderRepository: OrderRepository) {}
 
-  execute(): OrderListItem[] {
-    return this.orderRepository.findAll().map((order) => ({
+  async execute(): Promise<OrderListItem[]> {
+    const orders = await this.orderRepository.findAll();
+
+    return orders.map((order) => ({
       id: order.id.value,
       customerId: order.customerId,
       amount: order.amount.amount,

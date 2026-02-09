@@ -33,7 +33,7 @@ describe('OrdersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should delegate create to CreateOrder', () => {
+  it('should delegate create to CreateOrder', async () => {
     const dto: CreateOrderDto = { customerId: 'customer_1', amount: 120 };
     const expected = {
       id: 'order_1',
@@ -41,15 +41,15 @@ describe('OrdersService', () => {
       amount: 120,
       status: 'created',
     };
-    createOrder.execute.mockReturnValue(expected);
+    createOrder.execute.mockResolvedValue(expected);
 
-    const result = service.create(dto);
+    const result = await service.create(dto);
 
     expect(createOrder.execute).toHaveBeenCalledWith(dto);
     expect(result).toEqual(expected);
   });
 
-  it('should delegate list to ListOrders', () => {
+  it('should delegate list to ListOrders', async () => {
     const expected = [
       {
         id: 'order_1',
@@ -58,9 +58,9 @@ describe('OrdersService', () => {
         status: 'created',
       },
     ];
-    listOrders.execute.mockReturnValue(expected);
+    listOrders.execute.mockResolvedValue(expected);
 
-    const result = service.list();
+    const result = await service.list();
 
     expect(listOrders.execute).toHaveBeenCalledTimes(1);
     expect(result).toEqual(expected);
