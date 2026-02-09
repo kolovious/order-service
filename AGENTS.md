@@ -15,21 +15,25 @@ Code changes should prioritize:
 ## Architectural Principles (STRICT)
 
 ### Layering (must be respected)
-- **Infrastructure**
+- **Framework Layer (`src/app`)**
   - Controllers
   - DTOs
-  - NestJS-specific code
-- **Application**
+  - NestJS modules/services and framework wiring
+- **Application Layer (`src/context/*/application`)**
   - Use Cases
   - Orchestration logic
-- **Domain**
+- **Domain Layer (`src/context/*/domain`)**
   - Entities
   - Value Objects
   - Business rules
   - Repository interfaces
+- **Infrastructure Adapters (`src/context/*/infrastructure`)**
+  - Repository implementations
+  - Persistence/integration adapters
 
 Rules:
-- Domain **must not** depend on NestJS, DTOs, or infrastructure.
+- `src/app` **must not** contain business rules.
+- Domain **must not** depend on NestJS, DTOs, or `src/app`.
 - Application layer **must not** contain HTTP or framework concerns.
 - Controllers **must not** contain business logic.
 - Use cases inside `application/` **must not** include `use-case` or `UseCase` in file/class names.
