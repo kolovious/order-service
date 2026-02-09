@@ -33,6 +33,8 @@ Rules:
 - Application layer **must not** contain HTTP or framework concerns.
 - Controllers **must not** contain business logic.
 - Use cases inside `application/` **must not** include `use-case` or `UseCase` in file/class names.
+- File and folder names **must** use `kebab-case`.
+- Class names **must** use `PascalCase`.
 
 If a change violates these rules, it must be rejected.
 

@@ -1,4 +1,4 @@
-// src/orders/dto/order-response.dto.ts
+// src/orders/dto/orderResponse.dto.ts
 export class OrderResponseDto {
   id: string;
   customerId: string;

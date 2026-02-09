@@ -1,6 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import { Order } from '../domain/order';
 import { MoneyValueObject } from '../../shared/domain/value-objects/MoneyValueObject';
 import { OrderId } from '../domain/value-objects/OrderId';
+import { OrderRepository } from '../domain/order-repository';
 
 export interface CreateOrderCommand {
   customerId: string;
@@ -15,12 +17,16 @@ export interface CreateOrderResult {
 }
 
 export class CreateOrder {
+  constructor(private readonly orderRepository: OrderRepository) {}
+
   execute(command: CreateOrderCommand): CreateOrderResult {
     const order = Order.create({
-      id: new OrderId('550e8400-e29b-41d4-a716-446655440000'),
+      id: new OrderId(randomUUID()),
       customerId: command.customerId,
       amount: new MoneyValueObject(command.amount),
     });
+
+    this.orderRepository.save(order);
 
     return {
       id: order.id.value,

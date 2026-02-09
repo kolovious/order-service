@@ -1,3 +1,5 @@
+import { OrderRepository } from '../domain/order-repository';
+
 export interface OrderListItem {
   id: string;
   customerId: string;
@@ -6,7 +8,14 @@ export interface OrderListItem {
 }
 
 export class ListOrders {
+  constructor(private readonly orderRepository: OrderRepository) {}
+
   execute(): OrderListItem[] {
-    return [];
+    return this.orderRepository.findAll().map((order) => ({
+      id: order.id.value,
+      customerId: order.customerId,
+      amount: order.amount.amount,
+      status: order.status,
+    }));
   }
 }
